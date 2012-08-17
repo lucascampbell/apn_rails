@@ -20,7 +20,7 @@ class APN::App < APN::Base
   # As each APN::GroupNotification is sent the <tt>sent_at</tt> column will be timestamped,
   # so as to not be sent again.
   #
-  def test_connection(user_id)
+  def self.test_connection(user_id)
     user = User.find(user_id)
     res = APN::Connection.test_connection(user.configuration)
     res
