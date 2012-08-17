@@ -71,5 +71,24 @@ module APN
       
     end
     
+      def test_connection(config) # :nodoc:
+        cert = config.cert
+      
+        ctx = OpenSSL::SSL::SSLContext.new
+        ctx.key = OpenSSL::PKey::RSA.new(cert, config.passphrase)
+        ctx.cert = OpenSSL::X509::Certificate.new(cert)
+
+        sock = TCPSocket.new(config.host], config.port])
+        ssl = OpenSSL::SSL::SSLSocket.new(sock, ctx)
+        ssl.sync = true
+        res = ssl.connect
+
+        ssl.close
+        sock.close
+        res
+      end
+      
+    end
+    
   end # Connection
 end # APN
