@@ -3,6 +3,22 @@ module APN
     
     class << self
       
+      def test_connection(config) # :nodoc:
+          cert = config.cert
+
+          ctx = OpenSSL::SSL::SSLContext.new
+          ctx.key = OpenSSL::PKey::RSA.new(cert, config.passphrase)
+          ctx.cert = OpenSSL::X509::Certificate.new(cert)
+
+          sock = TCPSocket.new(config.host, config.port)
+          ssl = OpenSSL::SSL::SSLSocket.new(sock, ctx)
+          ssl.sync = true
+          res = ssl.connect
+
+          ssl.close
+          sock.close
+          res
+      end
       # Yields up an SSL socket to write notifications to.
       # The connections are close automatically.
       # 
@@ -69,23 +85,6 @@ module APN
         sock.close
       end
       
-    end
-    
-    def test_connection(config) # :nodoc:
-        cert = config.cert
-      
-        ctx = OpenSSL::SSL::SSLContext.new
-        ctx.key = OpenSSL::PKey::RSA.new(cert, config.passphrase)
-        ctx.cert = OpenSSL::X509::Certificate.new(cert)
-
-        sock = TCPSocket.new(config.host, config.port)
-        ssl = OpenSSL::SSL::SSLSocket.new(sock, ctx)
-        ssl.sync = true
-        res = ssl.connect
-
-        ssl.close
-        sock.close
-        res
     end
       
     
