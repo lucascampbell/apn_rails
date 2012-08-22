@@ -6,7 +6,7 @@ class APN::App < APN::Base
   has_many :unsent_notifications, :through => :devices
   has_many :group_notifications, :through => :groups
   has_many :unsent_group_notifications, :through => :groups
-  attr_accessible :name
+  attr_accessible :name, :user_id
   validates :name, :uniqueness => {:scope => :user_id}
   #has_many :unsent_apple_group_notifications, :through => :groups, :class_name => 'APN::Group', :conditions => {:name => "APPLE"}
   #has_many :unsent_android_group_notifications, :through => :groups, :class_name => 'APN::Group', :conditions => {:name => "ANDROID"}
