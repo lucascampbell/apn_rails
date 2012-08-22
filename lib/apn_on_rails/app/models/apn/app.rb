@@ -1,5 +1,5 @@
 class APN::App < APN::Base
-
+  belongs_to :user
   has_many :groups, :class_name => 'APN::Group', :dependent => :destroy
   has_many :devices, :class_name => 'APN::Device', :dependent => :destroy
   has_many :notifications, :through => :devices, :dependent => :destroy

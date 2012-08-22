@@ -6,7 +6,7 @@ module APN
       
       def test_connection(config) # :nodoc:
           cert = Base64.decode64(config.cert)
-          puts "cert is #{cert}"
+          
           ctx = OpenSSL::SSL::SSLContext.new
           ctx.key = OpenSSL::PKey::RSA.new(cert, config.passphrase)
           ctx.cert = OpenSSL::X509::Certificate.new(cert)
